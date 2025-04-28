@@ -2,6 +2,7 @@
 import NumberFlow from '@number-flow/vue'
 import { Activity, CreditCard, DollarSign, Users } from 'lucide-vue-next'
 
+const config = useRuntimeConfig()
 const dataCard = ref({
   totalRevenue: 0,
   totalRevenueDesc: 0,
@@ -59,7 +60,7 @@ onMounted(() => {
   <div class="w-full flex flex-col gap-4">
     <div class="flex flex-wrap items-center justify-between gap-2">
       <h2 class="text-2xl font-bold tracking-tight">
-        Dashboard
+        Dashboard {{ config.public.apiBase }}
       </h2>
       <div class="flex items-center space-x-2">
         <BaseDateRangePicker />
