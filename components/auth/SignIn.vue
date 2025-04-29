@@ -1,29 +1,34 @@
 <script setup lang="ts">
 import { Loader2 } from 'lucide-vue-next'
 import PasswordInput from '~/components/PasswordInput.vue'
+import type { SignInInterface } from '~/types/auth';
+import { useAuth } from '@/composables/useAuth';
 
-const email = ref('demo@gmail.com')
-const password = ref('password')
-const isLoading = ref(false)
+const { appNotification } = useNotification();
+const route = useRoute();
+// const isLoading = ref(false)
+const { $loading, isLoading } = useLoading();
+const { signIn } = useAuth();
+const redirectUrl = route.query.redirectUrl?.toString();
+const formData = reactive<SignInInterface>({
+  username: '',
+  password: '',
+});
 
-function onSubmit(event: Event) {
-  event.preventDefault()
-  if (!email.value || !password.value)
-    return
-
-  isLoading.value = true
-
-  setTimeout(() => {
-    if (email.value === 'demo@gmail.com' && password.value === 'password')
-      navigateTo('/')
-
-    isLoading.value = false
-  }, 3000)
-}
+const handleLogin = async () => {
+  try {
+    $loading.start();
+    await signIn(formData, redirectUrl);
+  } catch (error: any) {
+    appNotification(error._data);
+  } finally {
+    $loading.finish();
+  }
+};
 </script>
 
 <template>
-  <form class="grid gap-6" @submit="onSubmit">
+  <form @submit.prevent="handleLogin">
     <div class="flex flex-col gap-4">
       <Button variant="outline" class="w-full gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-4">
@@ -46,17 +51,16 @@ function onSubmit(event: Event) {
     </div>
     <Separator label="Or continue with" />
     <div class="grid gap-2">
-      <Label for="email">
-        Email
+      <Label for="username">
+        Username
       </Label>
       <Input
-        id="email"
-        v-model="email"
-        type="email"
-        placeholder="name@example.com"
+        id="username"
+        v-model="formData.username"
+        type="text"
+        placeholder="username"
         :disabled="isLoading"
         auto-capitalize="none"
-        auto-complete="email"
         auto-correct="off"
       />
     </div>
@@ -72,7 +76,7 @@ function onSubmit(event: Event) {
           Forgot your password?
         </NuxtLink>
       </div>
-      <PasswordInput id="password" v-model="password" />
+      <PasswordInput id="password" v-model="formData.password" />
     </div>
     <Button type="submit" class="w-full" :disabled="isLoading">
       <Loader2 v-if="isLoading" class="mr-2 h-4 w-4 animate-spin" />
@@ -87,6 +91,3 @@ function onSubmit(event: Event) {
   </div>
 </template>
 
-<style scoped>
-
-</style>
