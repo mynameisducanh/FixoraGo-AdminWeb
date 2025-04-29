@@ -12,7 +12,22 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
   ],
 
-  css: ['@unocss/reset/tailwind.css'],
+  plugins: ['~/plugins/ofetch', '~/plugins/antd'],
+
+  css: [
+    '@unocss/reset/tailwind.css',
+    'ant-design-vue/dist/reset.css'
+  ],
+
+  build: {
+    transpile: ['ant-design-vue']
+  },
+
+  vite: {
+    ssr: {
+      noExternal: ['ant-design-vue']
+    }
+  },
 
   colorMode: {
     classSuffix: "",

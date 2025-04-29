@@ -51,7 +51,7 @@
     "@tanstack/vue-table": "^8.21.2",
     "@unovis/ts": "^1.5.1",
     "@unovis/vue": "^1.5.1",
-    "ant-design-vue": "^4.2.6",
+    "ant-design-vue": "4.x",
     "embla-carousel": "^8.5.2",
     "embla-carousel-vue": "^8.5.2"
   },
