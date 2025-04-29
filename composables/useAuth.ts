@@ -85,7 +85,7 @@ export const useAuth = () => {
     } else {
       switch (user.roles) {
         case USER_ROLE.Admin:
-          $router.push(`/admin`);
+          $router.push(`/dashboard`);
           console.log("admin")
           break;
         case USER_ROLE.User:

@@ -10,14 +10,14 @@ export const navMenu: NavMenu[] = [
         link: '/dashboard',
       },
       {
-        title: 'User Account',
+        title: 'ManagerAccount',
         icon: 'i-lucide-user',
-        link: '/',
+        link: '/managerAccount',
       },
       {
         title: 'Request Service',
         icon: 'i-lucide-home',
-        link: '/',
+        link: '/service',
       },
       {
         title: 'Email',
